@@ -76,6 +76,22 @@ class OkayContainer implements ContainerInterface
         return $this->serviceStore[$name];
     }
 
+    public function bindParameters(array $parameters)
+    {
+        $this->mergeParameters($this->parameters, $parameters);
+    }
+
+    private function mergeParameters(&$path, $parameters)
+    {
+        foreach ($parameters as $i => $parameter) {
+            if (is_array($parameter) && !empty($parameter)) {
+                $this->mergeParameters($path[$i], $parameter);
+            } else {
+                $path[$i] = $parameter;
+            }
+        }
+    }
+
     public function bindService($name, $service)
     {
         $this->services[$name] = $service;
