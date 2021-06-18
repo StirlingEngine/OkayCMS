@@ -78,17 +78,8 @@ class OkayContainer implements ContainerInterface
 
     public function bindParameters(array $parameters)
     {
-        $this->mergeParameters($this->parameters, $parameters);
-    }
-
-    private function mergeParameters(&$path, $parameters)
-    {
-        foreach ($parameters as $i => $parameter) {
-            if (is_array($parameter) && !empty($parameter)) {
-                $this->mergeParameters($path[$i], $parameter);
-            } else {
-                $path[$i] = $parameter;
-            }
+        if (is_array($parameters)) {
+            $this->parameters = array_merge($this->parameters, $parameters);
         }
     }
 
